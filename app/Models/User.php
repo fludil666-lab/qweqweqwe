@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'phone',
+        'avatar',
     ];
 
     /**
@@ -41,4 +44,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isSpecialist(): bool
+    {
+        return $this->role === 'specialist';
+    }
+
+    public function specialistProfile()
+    {
+        return $this->hasOne(SpecialistProfile::class);
+    }
+
+    public function ordersAsCustomer()
+    {
+        return $this->hasMany(Order::class, 'customer_id');
+    }
 }
