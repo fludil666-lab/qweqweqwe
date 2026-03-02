@@ -1,49 +1,29 @@
-@extends('layouts.app')
+@extends('layouts.marketplace')
+
+@section('title', 'Подтверждение пароля')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Подтверждение пароля</div>
+<div style="max-width: 520px; margin: 0 auto;">
+    <div class="card">
+        <h1 style="font-size: 24px; margin-bottom: 8px;">Подтверждение пароля</h1>
+        <p class="text-muted" style="margin-bottom: 16px;">Для безопасности повторно введите пароль.</p>
 
-                <div class="card-body">
-                    Пожалуйста, подтвердите пароль, чтобы продолжить.
+        <form method="POST" action="{{ route('password.confirm') }}">
+            @csrf
 
-                    <form method="POST" action="{{ route('password.confirm') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">Пароль</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Подтвердить пароль
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        Забыли пароль?
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input id="password" type="password" name="password" required autocomplete="current-password">
+                @error('password')<div class="error">{{ $message }}</div>@enderror
             </div>
-        </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <button type="submit" class="btn btn-primary">Подтвердить</button>
+                @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}">Забыли пароль?</a>
+                @endif
+            </div>
+        </form>
     </div>
 </div>
 @endsection

@@ -1,28 +1,29 @@
-@extends('layouts.app')
+@extends('layouts.marketplace')
+
+@section('title', 'Подтверждение почты')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Подтверждение почты</div>
+<div style="max-width: 620px; margin: 0 auto;">
+    <div class="card">
+        <h1 style="font-size: 24px; margin-bottom: 8px;">Подтверждение эл. почты</h1>
 
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            Новая ссылка для подтверждения отправлена на ваш email.
-                        </div>
-                    @endif
-
-                    Перед продолжением проверьте почту и перейдите по ссылке подтверждения.
-                    Если письмо не пришло,
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">нажмите здесь, чтобы отправить повторно</button>.
-                    </form>
-                </div>
+        @if (session('resent'))
+            <div class="alert alert-success" style="margin: 10px 0 14px;">
+                Новая ссылка для подтверждения отправлена на вашу почту.
             </div>
-        </div>
+        @endif
+
+        <p style="margin-bottom: 12px;">
+            Перед продолжением проверьте почту и перейдите по ссылке из письма.
+        </p>
+        <p class="text-muted" style="margin-bottom: 12px;">
+            Если письмо не пришло, отправьте ссылку повторно.
+        </p>
+
+        <form method="POST" action="{{ route('verification.resend') }}">
+            @csrf
+            <button type="submit" class="btn btn-primary">Отправить повторно</button>
+        </form>
     </div>
 </div>
 @endsection
