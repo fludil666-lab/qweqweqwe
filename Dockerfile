@@ -17,6 +17,8 @@ WORKDIR /var/www
 COPY . .
 
 RUN composer install --no-dev --optimize-autoloader
+RUN cp .env.example .env || true
+RUN php artisan key:generate || true
 
 EXPOSE 10000
 
